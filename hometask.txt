@@ -1,0 +1,46 @@
+
+
+# Function to perform the XOR operation between two strings
+xor_strings <- function(str1, str2) {
+  str1 <- charToRaw(str1)
+  str2 <- charToRaw(str2)
+  result <- rawToChar(xor(str1, str2))
+  return(result)
+}
+
+# Function to encrypt a block using a given key
+encrypt_block <- function(block, key) {
+  # Pad the key with zeros if its length is less than the block size
+  if (nchar(key) < nchar(block)) {
+    key <- paste(key, rep("0", nchar(block) - nchar(key)), sep = "")
+  }
+  
+  encrypted_block <- xor_strings(block, key)
+  return(encrypted_block)
+}
+
+# Function to decrypt a block using a given key
+decrypt_block <- function(block, key) {
+
+  if (nchar(key) < nchar(block)) {
+    key <- paste(key, rep("0", nchar(block) - nchar(key)), sep = "")
+  }
+  
+  decrypted_block <- xor_strings(block, key)
+  return(decrypted_block)
+}
+
+block <- "10101010"
+key <- "11001100"
+
+encrypted_block <- encrypt_block(block, key)
+decrypted_block <- decrypt_block(encrypted_block, key)
+
+print("Original Block:")
+print(block)
+
+print("Encrypted Block:")
+print(encrypted_block)
+
+print("Decrypted Block:")
+print(decrypted_block)
